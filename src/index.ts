@@ -6,6 +6,9 @@ import routes from './routes';
 const app = express();
 app.use(express.json());
 app.use(routes);
-app.listen(3333, () => {
-  console.log('Running on host: http://localhost:3333');
+const port = process.env.PORT || 3333;
+app.listen(port, () => {
+   console.log(
+    `Running on host: ${process.env.PORT || "http://localhost:3333"}`
+  );
 });
