@@ -34,7 +34,7 @@ export default class PublicationController {
   }
   async find(request: Request, response: Response){
     const {name} = request.params
-    const findPublication = new PublicationServices.FindCompanyService()
+    const findPublication = new PublicationServices.FindCompanyService
     const companyFind = await findPublication.execute(name)
     return response.status(200).json(companyFind)
   }

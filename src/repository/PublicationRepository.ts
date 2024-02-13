@@ -14,11 +14,12 @@ class publicationRepository extends Repository<Publication> {
     return { message: 'atualizado com sucesso' };
   }
   async Find(name: string){
-    const publications = await name ? this
+    const publications = name ? (await this
     .createQueryBuilder()
     .select()
-    .where("name LIKE %:name%", { name }) : this.find()
+    .where("name LIKE %:name%", { name })) : (await this.find())
     const total_count = await this.count()
+    console.log(publications)
     return {items: publications,total_count }
   }
 
