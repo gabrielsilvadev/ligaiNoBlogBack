@@ -19,7 +19,6 @@ class publicationRepository extends Repository<Publication> {
     .select()
     .where("name LIKE %:name%", { name })) : (await this.find())
     const total_count = await this.count()
-    console.log(publications)
     return {items: publications,total_count }
   }
 
