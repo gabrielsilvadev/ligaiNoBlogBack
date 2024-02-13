@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import PublicationServices from '../services/publication';
-
-const pdf2html = require('pdf2html');
+import fs from 'fs';
 
 
 
@@ -11,7 +10,9 @@ export default class PublicationController {
     try {
       const publicationData = request.body;
       const file = request.file as Express.Multer.File;
-      const body = await convertPDFToText(file.path)
+      
+      const body = await readFileText(file.path)
+      await deleteFile(file.path)
       const createPublication = new PublicationServices.CreatePublicationService
       publicationData.body = body
       const publication = await createPublication.execute(publicationData);
@@ -48,7 +49,26 @@ export default class PublicationController {
 }
 
 
-async function convertPDFToText(docFilePath) {
-  const text = await pdf2html.text(docFilePath);
-  return text
+async function readFileText(docFilePath) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(docFilePath, 'utf8', (err, data) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(data);
+        }
+    });
+});
+}
+
+function deleteFile(docFilePath) {
+  return new Promise((resolve, reject) => {
+      fs.unlink(caminhoArquivo, (err) => {
+          if (err) {
+              reject(err);
+          } else {
+              resolve();
+          }
+      });
+  });
 }
