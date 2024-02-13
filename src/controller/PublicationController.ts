@@ -63,7 +63,7 @@ async function readFileText(docFilePath) {
 
 function deleteFile(docFilePath) {
   return new Promise((resolve, reject) => {
-      fs.unlink(caminhoArquivo, (err) => {
+      fs.unlink(docFilePath, (err) => {
           if (err) {
               reject(err);
           } else {
