@@ -24,9 +24,14 @@ export default class PublicationController {
 
   async update(request: Request, response: Response) {
     try {
-      const { publication, id } = request.body;
+      const {  id } = request.body;
+      const file = request.file as Express.Multer.File;
+      
+      const body = await readFileText(file.path)
+      await deleteFile(file.path)
+      request.body.body = body
       const UpdatePulbication = new PublicationServices.SaveCompanyService();
-      const companySave = await UpdatePulbication.execute(id, publication);
+      const companySave = await UpdatePulbication.execute(request.body);
       return response.status(200).json(companySave);
     } catch (error) {
       throw new Error(`${error}`);

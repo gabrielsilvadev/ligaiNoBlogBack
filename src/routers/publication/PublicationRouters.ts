@@ -9,7 +9,7 @@ const file = multer({
 })
 
 publicationRouters.post("/create",file.single('file'),/*isAuthenticated*/  publicationController.create)
-publicationRouters.patch("/save" , publicationController.update)
+publicationRouters.patch("/save" ,file.single('file'), publicationController.update)
 publicationRouters.get("/find/:name*?" , publicationController.find)
 publicationRouters.get("/findById/:id", publicationController.findById)
 
